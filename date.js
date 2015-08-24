@@ -94,7 +94,31 @@ var dateAssitant = (function()
         if (_d < day && _m == month && _y == year)
             return true;
         return false;
+    };
+    dateAss.compareDates = function (date_less, date_more)
+    {
+        var dl = date_less.split('.');
+        var dm = date_more.split('.');
+        dl =
+        {
+            y: dl[2],
+            m: dl[1],
+            d: dl[0]
+        };
+        dm =
+        {
+            y: dm[2],
+            m: dm[1],
+            d: dm[0]
+        };
 
+        if (dl.y < dm.y)
+            return true;
+        if (dl.m < dm.m && dl.y == dm.y)
+            return true;
+        if (dl.d < dm.d && dl.m == dm.m && dl.y == dm.y)
+            return true;
+        return false;
     };
 
     return dateAss;
