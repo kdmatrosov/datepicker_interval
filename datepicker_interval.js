@@ -188,15 +188,15 @@ window.onload = function () {
                         if (~selected.indexOf(i))
                         {
                             day.addClass('-selected');
-                        }
+                        }/*
                         if (inputs[0].date != undefined && inputs[1].date != undefined) {
-                            if ((inputs[0].m > inputs[0].date.m || inputs[0].m == inputs[0].date.m && i > inputs[0].date.d)
+                            if ((inputs[0].m < inputs[0].date.m || inputs[0].m == inputs[0].date.m && i > inputs[0].date.d)
                                 &&
                                 (inputs[1].m == inputs[1].date.m && i < inputs[1].date.d || inputs[1].m < inputs[1].date.m)) {
                                 day.addClass('-interval');
                             }
-                        }
-                        if (dateAssitant.checkWithAfterToday(y, m, i))
+                        }*/
+                        if (dateAssitant.checkWithAfterToday(inputs[0].y, inputs[0].m, i))
                         {
                             day.addClass('-future');
                         }
@@ -231,6 +231,7 @@ window.onload = function () {
                             var input = inputs[input__index];
                             input__index = (input__index + 1) % 2;
                             input.d = this.innerText || this.innerHTML;
+
                             input.value = dateAssitant.getFormatedDate(inputs[1].y, inputs[1].m, input.d);
                             input.date = {
                                 y: inputs[1].y,
@@ -263,15 +264,15 @@ window.onload = function () {
                         if (~selected.indexOf(i))
                         {
                             day.addClass('-selected');
-                        }
+                        }/*
                         if (inputs[0].date != undefined && inputs[1].date != undefined) {
-                            if ((inputs[0].m > inputs[0].date.m || inputs[0].m == inputs[0].date.m && i > inputs[0].date.d)
+                            if ((inputs[0].m < inputs[0].date.m || inputs[0].m == inputs[0].date.m && i > inputs[0].date.d)
                                 &&
-                                (inputs[1].m == inputs[1].date.m && i < inputs[1].date.d || inputs[1].m < inputs[1].date.m)) {
+                                (inputs[1].m == inputs[1].date.m && i < inputs[1].date.d || inputs[1].m > inputs[1].date.m)) {
                                 day.addClass('-interval');
                             }
-                        }
-                        if (dateAssitant.checkWithAfterToday(y, m, i))
+                        }*/
+                        if (dateAssitant.checkWithAfterToday(inputs[1].y, inputs[1].m, i))
                         {
                             day.addClass('-future');
                         }
