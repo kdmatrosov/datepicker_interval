@@ -168,7 +168,7 @@ window.onload = function () {
                                 inputs[input__index].date = input.date;
                             }
                             if (inputs[1].value != ''  && inputs[0].value != '') {
-                                if (dateAssitant.compareDates(inputs[1].value, inputs[0].value)) {
+                                if (dateAssitant.compareDates(inputs[1].date, inputs[0].date)) {
                                     var temp = inputs[1].value;
                                     inputs[1].value = inputs[0].value;
                                     inputs[0].value = temp;
@@ -188,14 +188,20 @@ window.onload = function () {
                         if (~selected.indexOf(i))
                         {
                             day.addClass('-selected');
-                        }/*
+                        }
+                        var this_day =
+                        {
+                            d: i,
+                            m: inputs[0].m,
+                            y: inputs[0].y
+                        };
+
                         if (inputs[0].date != undefined && inputs[1].date != undefined) {
-                            if ((inputs[0].m < inputs[0].date.m || inputs[0].m == inputs[0].date.m && i > inputs[0].date.d)
-                                &&
-                                (inputs[1].m == inputs[1].date.m && i < inputs[1].date.d || inputs[1].m < inputs[1].date.m)) {
+                            if (dateAssitant.compareDates(inputs[0].date, this_day)&&dateAssitant.compareDates(this_day,inputs[1].date))
+                            {
                                 day.addClass('-interval');
                             }
-                        }*/
+                        }
                         if (dateAssitant.checkWithAfterToday(inputs[0].y, inputs[0].m, i))
                         {
                             day.addClass('-future');
@@ -244,7 +250,7 @@ window.onload = function () {
                                 inputs[input__index].date = input.date;
                             }
                             if (inputs[1].value != ''  && inputs[0].value != '') {
-                                if (dateAssitant.compareDates(inputs[1].value, inputs[0].value)) {
+                                if (dateAssitant.compareDates(inputs[1].date, inputs[0].date)) {
                                     var temp = inputs[1].value;
                                     inputs[1].value = inputs[0].value;
                                     inputs[0].value = temp;
@@ -264,14 +270,20 @@ window.onload = function () {
                         if (~selected.indexOf(i))
                         {
                             day.addClass('-selected');
-                        }/*
+                        }
+                        var this_day =
+                        {
+                            d: i,
+                            m: inputs[1].m,
+                            y: inputs[1].y
+                        };
+
                         if (inputs[0].date != undefined && inputs[1].date != undefined) {
-                            if ((inputs[0].m < inputs[0].date.m || inputs[0].m == inputs[0].date.m && i > inputs[0].date.d)
-                                &&
-                                (inputs[1].m == inputs[1].date.m && i < inputs[1].date.d || inputs[1].m > inputs[1].date.m)) {
+                            if (dateAssitant.compareDates(inputs[0].date, this_day)&&dateAssitant.compareDates(this_day,inputs[1].date))
+                            {
                                 day.addClass('-interval');
                             }
-                        }*/
+                        }
                         if (dateAssitant.checkWithAfterToday(inputs[1].y, inputs[1].m, i))
                         {
                             day.addClass('-future');

@@ -97,26 +97,11 @@ var dateAssitant = (function()
     };
     dateAss.compareDates = function (date_less, date_more)
     {
-        var dl = date_less.split('.');
-        var dm = date_more.split('.');
-        dl =
-        {
-            y: dl[2],
-            m: dl[1],
-            d: dl[0]
-        };
-        dm =
-        {
-            y: dm[2],
-            m: dm[1],
-            d: dm[0]
-        };
-
-        if (dl.y < dm.y)
+        if (date_less.y < date_more.y)
             return true;
-        if (dl.m < dm.m && dl.y == dm.y)
+        if (date_less.m < date_more.m && date_less.y == date_more.y)
             return true;
-        if (dl.d < dm.d && dl.m == dm.m && dl.y == dm.y)
+        if (date_less.d < date_more.d && date_less.m == date_more.m && date_less.y == date_more.y)
             return true;
         return false;
     };
