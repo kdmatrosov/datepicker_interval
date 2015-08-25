@@ -44,6 +44,22 @@ window.onload = function () {
                 .on('mouseleave', function (e) {
                 });
 
+            var p_functions = initElem(d_panel, 'div').addClass('diP-functions');
+            var p_functions__previous_month = initElem(p_functions, 'div', 'Прошлый месяц').addClass('diP-functions__action').on('click', function()
+            {
+            });
+            var p_functions__current_month = initElem(p_functions, 'div', 'Этот месяц').addClass('diP-functions__action').on('click', function()
+            {
+            });
+            var p_functions__previous_week = initElem(p_functions, 'div', 'Прошлая неделя').addClass('diP-functions__action').on('click', function()
+            {
+            });
+            var p_functions__current_week = initElem(p_functions, 'div', 'Эта неделя').addClass('diP-functions__action').on('click', function()
+            {
+            });
+            var p_functions__yesterday = initElem(p_functions, 'div', 'Вчера').addClass('diP-functions__action').on('click', function()
+            {
+            });
             var p_header = initElem(d_panel, 'div').addClass('diP-header').attr('panel', '');
             var p_header__prev = initElem(p_header, 'div', '&#8249;').addClass('diP-header__prev').on('click', function()
             {
