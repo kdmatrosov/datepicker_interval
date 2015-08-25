@@ -92,7 +92,7 @@ window.onload = function () {
                 var self = d_input_end.getCE();
                 var temp_year = self.y, temp_month = self.m;
                 temp_year = (temp_month == 0) ? (--temp_year) : temp_year;
-                temp_month = (temp_month == 0) ? 11 : (--temp_month);
+                temp_month = (temp_month == 0) ? 11 : (temp_month - 2);
                 showMonth([temp_year, temp_month]);
             });
             var p_header__name = [
@@ -104,7 +104,7 @@ window.onload = function () {
                 var self = d_input_end.getCE();
                 var temp_year = self.y, temp_month = self.m;
                 temp_year = (temp_month == 11) ? (++temp_year) : temp_year;
-                temp_month = (temp_month == 11) ? 0 : (++temp_month);
+                temp_month = (temp_month == 11) ? 0 : (temp_month + 2);
                 showMonth([temp_year, temp_month]);
             });
 
