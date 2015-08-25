@@ -8,41 +8,50 @@ window.onload = function () {
             var new_datepicker = da.ce('div').addClass('di-picker');
             new_datepicker
                 .on('click', function (e) {
-
+/*
                     if (!e.target.hasAttribute('panel') && !e.target.parentNode.hasAttribute('panel') &&
                         !e.target.parentNode.hasAttribute('data')
-                    && !e.target.classList.contains('di-picker__day')) {
+                    && !e.target.classList.contains('di-picker__day')&& !e.target.classList.contains('di-picker__day_name')) {
                         console.log(e);
-                        d_panel.currentElement.classList.toggle('dspl-none');
-                    }
+                        d_panel.removeClass('dspl-none');
+                    }*/
+                })
+                .on('mouseenter', function (e) {
+                    d_input_start.on('blur', function () {
+                    });
+                    d_input_end.on('blur', function () {
+                    });
+
+                })
+                .on('mouseleave', function (e) {
+                    d_input_start.on('blur', function () {
+                        d_panel.addClass('dspl-none');
+                    });
+                    d_input_end.on('blur', function () {
+                        d_panel.addClass('dspl-none');
+                    });
                 });
 
             var d_input_start = initElem(new_datepicker, 'input').addClass('di-picker__value').attr("id", Pickers[0].getAttribute("id")+'_start')
                 .attr('type', 'text').attr('placeholder', 'дд.мм.гг')
-                //.attr('value', '02.08.2015')
                 .on('blur', function (e) {
-                    //d_panel.addClass('dspl-none');
                 })
                 .on('click', function (e) {
-
+                    d_panel.removeClass('dspl-none');
                     showMonth();
                 });
             var d_dash = initElem(new_datepicker, 'div', '\u2014').addClass('di-dash');
             var d_input_end = initElem(new_datepicker, 'input').addClass('di-picker__value').attr("id", Pickers[0].getAttribute("id")+'_end')
                 .attr('type', 'text').attr('placeholder', 'дд.мм.гг')
-                //.attr('value', '02.08.2015')
                 .on('blur', function (e) {
                     //d_panel.addClass('dspl-none');
 
                 })
                 .on('click', function (e) {
+                    d_panel.removeClass('dspl-none');
                     showMonth();
                 });
-            var d_panel = initElem(new_datepicker, 'div').addClass('di-panel').addClass('dspl-none').attr('panel', '')
-                .on('mouseenter', function (e) {
-                })
-                .on('mouseleave', function (e) {
-                });
+            var d_panel = initElem(new_datepicker, 'div').addClass('di-panel').addClass('dspl-none').attr('panel', '');
 
             var p_functions = initElem(d_panel, 'div').addClass('diP-functions');
 
@@ -61,38 +70,43 @@ window.onload = function () {
                 var month__days = dateAssitant.getPreviousMonthDays();
                 setDateForInput(d_input_start, month__days.first);
                 setDateForInput(d_input_end, month__days.last);
+                d_panel.addClass('dspl-none');
             });
             var p_functions__current_month = initElem(p_functions, 'div', 'Этот месяц').addClass('diP-functions__action').on('click', function()
             {
                 var month__days = dateAssitant.getCurrentMonthDays();
                 setDateForInput(d_input_start, month__days.first);
                 setDateForInput(d_input_end, month__days.last);
+                d_panel.addClass('dspl-none');
             });
             var p_functions__previous_week = initElem(p_functions, 'div', 'Прошлая неделя').addClass('diP-functions__action').on('click', function()
             {
                 var month__days = dateAssitant.getPreviousWeekDays();
                 setDateForInput(d_input_start, month__days.first);
                 setDateForInput(d_input_end, month__days.last);
+                d_panel.addClass('dspl-none');
             });
             var p_functions__current_week = initElem(p_functions, 'div', 'Эта неделя').addClass('diP-functions__action').on('click', function()
             {
                 var month__days = dateAssitant.getCurrentWeekDays();
                 setDateForInput(d_input_start, month__days.first);
                 setDateForInput(d_input_end, month__days.last);
+                d_panel.addClass('dspl-none');
             });
             var p_functions__yesterday = initElem(p_functions, 'div', 'Вчера').addClass('diP-functions__action').on('click', function()
             {
                 var month__days = dateAssitant.getYesterdayDays();
                 setDateForInput(d_input_start, month__days.first);
                 setDateForInput(d_input_end, month__days.last);
+                d_panel.addClass('dspl-none');
             });
             var p_header = initElem(d_panel, 'div').addClass('diP-header').attr('panel', '');
             var p_header__prev = initElem(p_header, 'div', '&#8249;').addClass('diP-header__prev').on('click', function()
             {
                 var self = d_input_end.getCE();
                 var temp_year = self.y, temp_month = self.m;
-                temp_year = (temp_month == 0) ? (--temp_year) : temp_year;
-                temp_month = (temp_month == 0) ? 11 : (temp_month - 2);
+                temp_year = (temp_month < 2) ? (--temp_year) : temp_year;
+                temp_month = (temp_month < 2) ? 11 : (temp_month - 2);
                 showMonth([temp_year, temp_month]);
             });
             var p_header__name = [
@@ -103,8 +117,8 @@ window.onload = function () {
             {
                 var self = d_input_end.getCE();
                 var temp_year = self.y, temp_month = self.m;
-                temp_year = (temp_month == 11) ? (++temp_year) : temp_year;
-                temp_month = (temp_month == 11) ? 0 : (temp_month + 2);
+                temp_year = (temp_month > 9) ? (++temp_year) : temp_year;
+                temp_month = (temp_month > 9) ? 0 : (temp_month + 2);
                 showMonth([temp_year, temp_month]);
             });
 
@@ -114,7 +128,7 @@ window.onload = function () {
                 var di_end   = d_input_end.getCE();
 
                 var dt__check = dt == null || dt == undefined || dt.length == 0;
-                if (d_panel.hasClass('dspl-none') || !dt__check) {
+                if (!d_panel.hasClass('dspl-none') || !dt__check) {
 
 
                     var parentNode = di_start.parentNode;
@@ -167,20 +181,20 @@ window.onload = function () {
 
                     var days = dateAssitant.getDays();
                     
-                    for (var input_i = 0; input_i < 2; input_i++)
+                    for (var input_i = 0; input_i < 2; input_i++) // go throw inputs
                     {
                         (function(input_i) {
-                            p_data[input_i].racfn();
+                            p_data[input_i].racfn(); // clear filed for days
                             var curr_day = (inputs[input_i].y == ty && inputs[input_i].m == tm) ? td : 0;
                             var selected = getSelectedDates(inputs[input_i]);
                             var month = dateAssitant.getMonth(inputs[input_i].y, inputs[input_i].m);
-                            p_header__name[input_i].text(dateAssitant.getMonthName(inputs[input_i].m) + ' ' + inputs[input_i].y);
+                            p_header__name[input_i].text(dateAssitant.getMonthName(inputs[input_i].m) + ' ' + inputs[input_i].y); // month name
 
                             var week = initElem(p_data[input_i], 'div').addClass('di-picker__week');
 
                             var i = 0, len = days.length;
                             do {
-                                initElem(week, 'div', days[i++]).addClass('di-picker__day_name');
+                                initElem(week, 'div', days[i++]).addClass('di-picker__day_name'); // week days
                             } while (i < len);
                             i = 1;
                             len = month.length;
@@ -195,28 +209,28 @@ window.onload = function () {
                                     if (first__line) {
                                         first__line = false;
                                         for (var j = 0; j < month[i]; j++) {
-                                            initElem(week, 'div').addClass('di-picker__day_name').addClass('-empty');
+                                            initElem(week, 'div').addClass('di-picker__day_name').addClass('-empty'); // add empty cells for 1st week in month
                                         }
                                     }
                                 }
-                                var day = initElem(week, 'div', i).addClass('di-picker__day').on('click', function () {
+                                var day = initElem(week, 'div', i).addClass('di-picker__day').on('click', function () { // init day
 
                                     if (this.classList.contains('-future')) return false;
-                                    var input = inputs[input__index];
+                                    var input = inputs[input__index]; // current input to get value
                                     input__index = (input__index + 1) % 2;
-                                    input.d = this.innerText || this.innerHTML;
-                                    input.value = dateAssitant.getFormatedDate(inputs[input_i].y, inputs[input_i].m, input.d);
+                                    input.d = this.innerText || this.innerHTML; // cross  brower
+                                    input.value = dateAssitant.getFormatedDate(inputs[input_i].y, inputs[input_i].m, input.d); // set value
                                     input.date = {
                                         y: inputs[input_i].y,
                                         m: inputs[input_i].m,
                                         d: +input.d
                                     };
-                                    if (inputs[input__index].value == '') {
+                                    if (inputs[input__index].value == '') { // if second input is empty
                                         inputs[input__index].value = input.value;
                                         inputs[input__index].date = input.date;
                                     }
                                     if (inputs[1].value != '' && inputs[0].value != '') {
-                                        if (dateAssitant.compareDates(inputs[1].date, inputs[0].date)) {
+                                        if (dateAssitant.compareDates(inputs[1].date, inputs[0].date)) { // if second input is less than first
                                             var temp = inputs[1].value;
                                             inputs[1].value = inputs[0].value;
                                             inputs[0].value = temp;
@@ -226,8 +240,8 @@ window.onload = function () {
                                             input__index = 0;
                                         }
                                     }
-                                    di_start.index = input__index;
-                                    showMonth([inputs[1].y, inputs[1].m]);
+                                    di_start.index = input__index; // remember the next input to change value
+                                    showMonth([inputs[1].y, inputs[1].m]); // redraw
                                 });
                                 if (curr_day == i) {
                                     day.addClass('-today');
