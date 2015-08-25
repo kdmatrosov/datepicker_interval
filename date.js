@@ -105,6 +105,45 @@ var dateAssitant = (function()
             return true;
         return false;
     };
+    dateAss.getPreviousMonthDays = function() //returnFirstAndLastDays
+    {
+        var last = new Date(); // сегодня
+        last.setDate(1); // первое число
+        last.setHours(-1);
+        var first = new Date(last.getFullYear(), last.getMonth(), 1);
+        return {first:first, last:last};
+    };
+    dateAss.getCurrentMonthDays = function() //returnFirstAndLastDays
+    {
+        var lastDay = new Date();
+        var firstDay = new Date(lastDay.getFullYear(), lastDay.getMonth(), 1);
+        return {first:firstDay, last: lastDay};
+    };
+    dateAss.getPreviousWeekDays = function() //
+    {
+        var before_week = new Date(new Date().getTime() - 60 * 60 * 24 * 7 * 1000) // 60 * 60 * 24 * 7 * 1000 - время недели в миллисекундах
+        , day = before_week.getDay()
+        , diff_to_Monday = before_week.getDate() - day + (day === 0 ? -6 : 1)
+        , last_monday = new Date(before_week.setDate(diff_to_Monday))
+        , last_sunday = new Date(before_week.setDate(diff_to_Monday + 6));
+        return {first:last_monday, last:last_sunday};
+    };
+    dateAss.getCurrentWeekDays = function()
+    {
+        var curr = new Date;
+        var first = curr.getDate() - curr.getDay() + 1;
+        var last = first + curr.getDay() - 1;
+
+        var firstday = new Date(curr.setDate(first));
+        var lastday = new Date(curr.setDate(last));
+        return {first:firstday, last: lastday};
+    };
+    dateAss.getYesterdayDays = function()
+    {
+        var date = new Date();
+        date.setDate(date.getDate() - 1);
+        return {first:date, last:date};
+    };
 
     return dateAss;
 })();

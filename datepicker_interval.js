@@ -45,20 +45,46 @@ window.onload = function () {
                 });
 
             var p_functions = initElem(d_panel, 'div').addClass('diP-functions');
+
+            function setDateForInput(input, date)
+            {
+                input.currentElement.date =
+                {
+                    y: date.getFullYear(),
+                    m: date.getMonth(),
+                    d: date.getDate()
+                };
+                input.currentElement.value = dateAssitant.getFormatedDate(input.currentElement.date.y, input.currentElement.date.m, input.currentElement.date.d);
+            }
             var p_functions__previous_month = initElem(p_functions, 'div', 'Прошлый месяц').addClass('diP-functions__action').on('click', function()
             {
+                var month__days = dateAssitant.getPreviousMonthDays();
+                setDateForInput(d_input_start, month__days.first);
+                setDateForInput(d_input_end, month__days.last);
             });
             var p_functions__current_month = initElem(p_functions, 'div', 'Этот месяц').addClass('diP-functions__action').on('click', function()
             {
+                var month__days = dateAssitant.getCurrentMonthDays();
+                setDateForInput(d_input_start, month__days.first);
+                setDateForInput(d_input_end, month__days.last);
             });
             var p_functions__previous_week = initElem(p_functions, 'div', 'Прошлая неделя').addClass('diP-functions__action').on('click', function()
             {
+                var month__days = dateAssitant.getPreviousWeekDays();
+                setDateForInput(d_input_start, month__days.first);
+                setDateForInput(d_input_end, month__days.last);
             });
             var p_functions__current_week = initElem(p_functions, 'div', 'Эта неделя').addClass('diP-functions__action').on('click', function()
             {
+                var month__days = dateAssitant.getCurrentWeekDays();
+                setDateForInput(d_input_start, month__days.first);
+                setDateForInput(d_input_end, month__days.last);
             });
             var p_functions__yesterday = initElem(p_functions, 'div', 'Вчера').addClass('diP-functions__action').on('click', function()
             {
+                var month__days = dateAssitant.getYesterdayDays();
+                setDateForInput(d_input_start, month__days.first);
+                setDateForInput(d_input_end, month__days.last);
             });
             var p_header = initElem(d_panel, 'div').addClass('diP-header').attr('panel', '');
             var p_header__prev = initElem(p_header, 'div', '&#8249;').addClass('diP-header__prev').on('click', function()
@@ -93,8 +119,6 @@ window.onload = function () {
 
                     var parentNode = di_start.parentNode;
                     var data = d_input_start.getDocumentElementsWithAttribute('data', '', parentNode)[0];
-                    p_data__1.racfn();
-                    p_data__2.racfn();
                     var y, m, d;
                     var today = new Date(),
                         ty = today.getFullYear(),
@@ -141,181 +165,102 @@ window.onload = function () {
                     inputs[0].y = m > 0 ? y : y - 1;
                     inputs[0].m = m > 0 ? m - 1: 11 ;
 
-                    var curr_day = (inputs[0].y == ty && inputs[0].m == tm) ? td : 0;
-                    var selected = getSelectedDates(inputs[0]);
-
-
-                    var month = dateAssitant.getMonth(inputs[0].y, inputs[0].m);
-                    p_header__name[0].text(dateAssitant.getMonthName(inputs[0].m) + ' ' + inputs[0].y);
                     var days = dateAssitant.getDays();
-                    var week = initElem(p_data__1, 'div').addClass('di-picker__week');
-                    var i = 0, len = days.length;
-                    do {
-                        initElem(week, 'div', days[i++]).addClass('di-picker__day_name');
-                    } while (i < len);
-                    i = 1;
+                    
+                    for (var input_i = 0; input_i < 2; input_i++)
+                    {
+                        (function(input_i) {
+                            p_data[input_i].racfn();
+                            var curr_day = (inputs[input_i].y == ty && inputs[input_i].m == tm) ? td : 0;
+                            var selected = getSelectedDates(inputs[input_i]);
+                            var month = dateAssitant.getMonth(inputs[input_i].y, inputs[input_i].m);
+                            p_header__name[input_i].text(dateAssitant.getMonthName(inputs[input_i].m) + ' ' + inputs[input_i].y);
 
-                    len = month.length;
-                    week = null;
-                    var first__line = false;
-                    do {
-                        if (week == null || month[i] == 0) {
-                            if (week == null) {
-                                first__line = true;
-                            }
-                            week = initElem(p_data__1, 'div').addClass('di-picker__week');
-                            if (first__line) {
-                                first__line = false;
-                                for (var j = 0; j < month[i]; j++) {
-                                    initElem(week, 'div').addClass('di-picker__day_name').addClass('-empty');
+                            var week = initElem(p_data[input_i], 'div').addClass('di-picker__week');
+
+                            var i = 0, len = days.length;
+                            do {
+                                initElem(week, 'div', days[i++]).addClass('di-picker__day_name');
+                            } while (i < len);
+                            i = 1;
+                            len = month.length;
+                            week = null;
+                            var first__line = false;
+                            do {
+                                if (week == null || month[i] == 0) {
+                                    if (week == null) {
+                                        first__line = true;
+                                    }
+                                    week = initElem(p_data[input_i], 'div').addClass('di-picker__week');
+                                    if (first__line) {
+                                        first__line = false;
+                                        for (var j = 0; j < month[i]; j++) {
+                                            initElem(week, 'div').addClass('di-picker__day_name').addClass('-empty');
+                                        }
+                                    }
                                 }
-                            }
-                        }
-                        var day = initElem(week, 'div', i).addClass('di-picker__day').on('click', function () {
-                            var input = inputs[input__index];
-                            input__index = (input__index + 1) % 2;
-                            input.d = this.innerText || this.innerHTML;
-                            input.value = dateAssitant.getFormatedDate(inputs[0].y, inputs[0].m, input.d);
-                            input.date = {
-                                y: inputs[0].y,
-                                m: inputs[0].m,
-                                d: +input.d
-                            };
-                            if (inputs[input__index].value == '')
-                            {
-                                inputs[input__index].value = input.value;
-                                inputs[input__index].date = input.date;
-                            }
-                            if (inputs[1].value != ''  && inputs[0].value != '') {
-                                if (dateAssitant.compareDates(inputs[1].date, inputs[0].date)) {
-                                    var temp = inputs[1].value;
-                                    inputs[1].value = inputs[0].value;
-                                    inputs[0].value = temp;
-                                    temp = inputs[1].date;
-                                    inputs[1].date = inputs[0].date;
-                                    inputs[0].date = temp;
-                                    input__index = 0;
+                                var day = initElem(week, 'div', i).addClass('di-picker__day').on('click', function () {
+
+                                    if (this.classList.contains('-future')) return false;
+                                    var input = inputs[input__index];
+                                    input__index = (input__index + 1) % 2;
+                                    input.d = this.innerText || this.innerHTML;
+                                    input.value = dateAssitant.getFormatedDate(inputs[input_i].y, inputs[input_i].m, input.d);
+                                    input.date = {
+                                        y: inputs[input_i].y,
+                                        m: inputs[input_i].m,
+                                        d: +input.d
+                                    };
+                                    if (inputs[input__index].value == '') {
+                                        inputs[input__index].value = input.value;
+                                        inputs[input__index].date = input.date;
+                                    }
+                                    if (inputs[1].value != '' && inputs[0].value != '') {
+                                        if (dateAssitant.compareDates(inputs[1].date, inputs[0].date)) {
+                                            var temp = inputs[1].value;
+                                            inputs[1].value = inputs[0].value;
+                                            inputs[0].value = temp;
+                                            temp = inputs[1].date;
+                                            inputs[1].date = inputs[0].date;
+                                            inputs[0].date = temp;
+                                            input__index = 0;
+                                        }
+                                    }
+                                    di_start.index = input__index;
+                                    showMonth([inputs[1].y, inputs[1].m]);
+                                });
+                                if (curr_day == i) {
+                                    day.addClass('-today');
                                 }
-                            }
-                            di_start.index = input__index;
-                            showMonth([inputs[1].y, inputs[1].m]);
-                        });
-                        if (curr_day == i)
-                        {
-                            day.addClass('-today');
-                        }
-                        if (~selected.indexOf(i))
-                        {
-                            day.addClass('-selected');
-                        }
-                        var this_day =
-                        {
-                            d: i,
-                            m: inputs[0].m,
-                            y: inputs[0].y
-                        };
-
-                        if (inputs[0].date != undefined && inputs[1].date != undefined) {
-                            if (dateAssitant.compareDates(inputs[0].date, this_day)&&dateAssitant.compareDates(this_day,inputs[1].date))
-                            {
-                                day.addClass('-interval');
-                            }
-                        }
-                        if (dateAssitant.checkWithAfterToday(inputs[0].y, inputs[0].m, i))
-                        {
-                            day.addClass('-future');
-                        }
-                        i++;
-                    } while (i < len);
-                    month = dateAssitant.getMonth(inputs[1].y, inputs[1].m);
-
-                    p_header__name[1].text(dateAssitant.getMonthName(inputs[1].m) + ' ' + inputs[1].y);
-                    week = initElem(p_data__2, 'div').addClass('di-picker__week');
-                    i = 0; len = days.length;
-                    do {
-                        initElem(week, 'div', days[i++]).addClass('di-picker__day_name');
-                    } while (i < len);
-                    i = 1;
-                    curr_day = (inputs[1].y == ty && inputs[1].m == tm) ? td : 0;
-                    selected = getSelectedDates(inputs[1]);
-                    len = month.length;
-                    week = null;
-                    first__line = false;
-                    do {
-                        if (week == null || month[i] == 0) {
-                            if (week == null) {
-                                first__line = true;
-                            }
-                            week = initElem(p_data__2, 'div').addClass('di-picker__week');
-                            if (first__line) {
-                                first__line = false;
-                                for (var j = 0; j < month[i]; j++) {
-                                    initElem(week, 'div').addClass('di-picker__day_name').addClass('-empty');
+                                if (~selected.indexOf(i)) {
+                                    day.addClass('-selected');
                                 }
-                            }
-                        }
-                        var day = initElem(week, 'div', i).addClass('di-picker__day').on('click', function () {
-                            var input = inputs[input__index];
-                            input__index = (input__index + 1) % 2;
-                            input.d = this.innerText || this.innerHTML;
+                                var this_day =
+                                {
+                                    d: i,
+                                    m: inputs[input_i].m,
+                                    y: inputs[input_i].y
+                                };
 
-                            input.value = dateAssitant.getFormatedDate(inputs[1].y, inputs[1].m, input.d);
-                            input.date = {
-                                y: inputs[1].y,
-                                m: inputs[1].m,
-                                d: +input.d
-                            };
-                            if (inputs[input__index].value == '')
-                            {
-                                inputs[input__index].value = input.value;
-                                inputs[input__index].date = input.date;
-                            }
-                            if (inputs[1].value != ''  && inputs[0].value != '') {
-                                if (dateAssitant.compareDates(inputs[1].date, inputs[0].date)) {
-                                    var temp = inputs[1].value;
-                                    inputs[1].value = inputs[0].value;
-                                    inputs[0].value = temp;
-                                    temp = inputs[1].date;
-                                    inputs[1].date = inputs[0].date;
-                                    inputs[0].date = temp;
-                                    input__index = 0;
+                                if (inputs[0].date != undefined && inputs[1].date != undefined) {
+                                    if (dateAssitant.compareDates(inputs[0].date, this_day) && dateAssitant.compareDates(this_day, inputs[1].date)) {
+                                        day.addClass('-interval');
+                                    }
                                 }
-                            }
-                            di_start.index = input__index;
-                            showMonth([inputs[1].y, inputs[1].m]);
-                        });
-                        if (curr_day == i)
-                        {
-                            day.addClass('-today');
-                        }
-                        if (~selected.indexOf(i))
-                        {
-                            day.addClass('-selected');
-                        }
-                        var this_day =
-                        {
-                            d: i,
-                            m: inputs[1].m,
-                            y: inputs[1].y
-                        };
-
-                        if (inputs[0].date != undefined && inputs[1].date != undefined) {
-                            if (dateAssitant.compareDates(inputs[0].date, this_day)&&dateAssitant.compareDates(this_day,inputs[1].date))
-                            {
-                                day.addClass('-interval');
-                            }
-                        }
-                        if (dateAssitant.checkWithAfterToday(inputs[1].y, inputs[1].m, i))
-                        {
-                            day.addClass('-future');
-                        }
-                        i++;
-                    } while (i < len);
+                                if (dateAssitant.checkWithAfterToday(inputs[input_i].y, inputs[input_i].m, i)) {
+                                    day.addClass('-future');
+                                }
+                                i++;
+                            } while (i < len);
+                        })(input_i);
+                    }
                 }
             }
 
-            var p_data__1 = initElem(d_panel, 'div').addClass('di-panel__data').attr('data', '');
-            var p_data__2 = initElem(d_panel, 'div').addClass('di-panel__data').attr('data', '');
+            var p_data = [
+                initElem(d_panel, 'div').addClass('di-panel__data').attr('data', ''),
+                initElem(d_panel, 'div').addClass('di-panel__data').attr('data', '')
+                ];
             new_datepicker.replace(Pickers[0]);
             datePickers.push(new_datepicker.getCE());
         })();
