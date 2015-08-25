@@ -53,7 +53,10 @@ window.onload = function () {
                 temp_month = (temp_month == 0) ? 11 : (--temp_month);
                 showMonth([temp_year, temp_month]);
             });
-            var p_header__name = initElem(p_header, 'div').addClass('diP-header__name');
+            var p_header__name = [
+                initElem(p_header, 'div').addClass('diP-header__name').addClass('-previousMonth'),
+                initElem(p_header, 'div').addClass('diP-header__name').addClass('-currentMonth')
+            ];
             var p_header__next = initElem(p_header, 'div', '&#8250;').addClass('diP-header__next').on('click', function()
             {
                 var self = d_input_end.getCE();
@@ -127,7 +130,7 @@ window.onload = function () {
 
 
                     var month = dateAssitant.getMonth(inputs[0].y, inputs[0].m);
-                    p_header__name.text(dateAssitant.getMonthName(m) + ' ' + y);
+                    p_header__name[0].text(dateAssitant.getMonthName(inputs[0].m) + ' ' + inputs[0].y);
                     var days = dateAssitant.getDays();
                     var week = initElem(p_data__1, 'div').addClass('di-picker__week');
                     var i = 0, len = days.length;
@@ -160,7 +163,7 @@ window.onload = function () {
                             input.date = {
                                 y: inputs[0].y,
                                 m: inputs[0].m,
-                                d: input.d
+                                d: +input.d
                             };
                             if (inputs[input__index].value == '')
                             {
@@ -209,6 +212,8 @@ window.onload = function () {
                         i++;
                     } while (i < len);
                     month = dateAssitant.getMonth(inputs[1].y, inputs[1].m);
+
+                    p_header__name[1].text(dateAssitant.getMonthName(inputs[1].m) + ' ' + inputs[1].y);
                     week = initElem(p_data__2, 'div').addClass('di-picker__week');
                     i = 0; len = days.length;
                     do {
@@ -242,7 +247,7 @@ window.onload = function () {
                             input.date = {
                                 y: inputs[1].y,
                                 m: inputs[1].m,
-                                d: input.d
+                                d: +input.d
                             };
                             if (inputs[input__index].value == '')
                             {

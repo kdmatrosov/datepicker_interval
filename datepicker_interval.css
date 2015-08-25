@@ -74,11 +74,19 @@ input.di-picker__value
 .diP-header__name
 {
     font-size: 16px;
-    width:  128px;
+    width:  167px;
     height: 100%;
     text-align: center;
     display: inline-block;
     padding-top: 1px;
+}
+.diP-header__name.-previousMonth
+{
+    padding-right: 39px;
+}
+.diP-header__name.-currentMonth
+{
+    padding-left: 39px;
 }
 .diP-header__prev
 {
