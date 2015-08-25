@@ -8,13 +8,14 @@ window.onload = function () {
             var new_datepicker = da.ce('div').addClass('di-picker');
             new_datepicker
                 .on('click', function (e) {
-/*
-                    if (!e.target.hasAttribute('panel') && !e.target.parentNode.hasAttribute('panel') &&
-                        !e.target.parentNode.hasAttribute('data')
-                    && !e.target.classList.contains('di-picker__day')&& !e.target.classList.contains('di-picker__day_name')) {
-                        console.log(e);
-                        d_panel.removeClass('dspl-none');
-                    }*/
+                    if (d_input_start.currentElement.index == 1)
+                    {
+                        d_input_end.currentElement.focus();
+                    }
+                    else
+                    {
+                        d_input_start.currentElement.focus();
+                    }
                 })
                 .on('mouseenter', function (e) {
                     d_input_start.on('blur', function () {
@@ -38,6 +39,7 @@ window.onload = function () {
                 })
                 .on('click', function (e) {
                     d_panel.removeClass('dspl-none');
+                    d_input_start.currentElement.index = 0;
                     showMonth();
                 });
             var d_dash = initElem(new_datepicker, 'div', '\u2014').addClass('di-dash');
@@ -49,9 +51,13 @@ window.onload = function () {
                 })
                 .on('click', function (e) {
                     d_panel.removeClass('dspl-none');
+                    d_input_start.currentElement.index = 1;
                     showMonth();
                 });
-            var d_panel = initElem(new_datepicker, 'div').addClass('di-panel').addClass('dspl-none').attr('panel', '');
+            var d_panel = initElem(new_datepicker, 'div').addClass('di-panel').addClass('dspl-none').attr('panel', '').on('click', function()
+            {
+
+            });
 
             var p_functions = initElem(d_panel, 'div').addClass('diP-functions');
 
