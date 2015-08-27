@@ -35,8 +35,8 @@ window.onload = function () {
                     });
                 });
 
-            var di_icon = initElem(new_datepicker, 'div').addClass('dic-icon');
-            var di_icon__dp = initElem(di_icon, 'div').addClass('dic-icon__datepicker').on('click', function()
+            var di_icon = initElem(new_datepicker, 'div').addClass('di-icon');
+            var di_icon__dp = initElem(di_icon, 'div').addClass('di-icon__datepicker').on('click', function()
             {
                 d_panel.currentElement.classList.toggle('dspl-none');
                 this.classList.toggle('-active');
