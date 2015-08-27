@@ -46,17 +46,25 @@ body
 }
 .di-icon
 {
-    background: rgba(243, 243, 243, 1) url("images/datepicker.svg") no-repeat center;
     height: 100%;
     width: 30px;
     border-right: 1px solid #d1d1d1;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
-    opacity: 0.5;
     float: left;
 }
-.di-icon:hover,
-.di-icon.-active
+.di-icon__datepicker
+{
+
+    background: rgba(243, 243, 243, 1) url("images/datepicker.svg") no-repeat center;
+    opacity: 0.5;
+    height: 100%;
+    width: 100%;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+.di-icon__datepicker:hover,
+.di-icon__datepicker.-active
 {
     cursor: pointer;
     opacity: 1;
