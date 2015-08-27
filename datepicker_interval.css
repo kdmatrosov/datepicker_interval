@@ -16,7 +16,7 @@ body
 {
     /*display: none;*/
     position: absolute;
-    width: 545px;
+    width: 546px;
     height: 203px;
     background-color: #ffffff;
     z-index: 50000;
@@ -37,12 +37,38 @@ body
     user-select: none;
     font-family: PTS, Tahoma;
     height: 29px;
-    width: 172px;
+    width: 204px;
     position: relative;
     border: 1px solid #d1d1d1;
+    border-radius: 4px;
     padding: 0;
     margin: 0 auto;
-    display: inline-flex;
+}
+.di-icon
+{
+    background: rgba(243, 243, 243, 1) url("images/datepicker.svg") no-repeat center;
+    height: 100%;
+    width: 30px;
+    border-right: 1px solid #d1d1d1;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    opacity: 0.5;
+    float: left;
+}
+.di-icon:hover,
+.di-icon.-active
+{
+    cursor: pointer;
+    opacity: 1;
+}
+.di-triangle
+{
+    background: rgba(0, 0, 0, 0) url("images/triangle.svg") no-repeat center;
+    height: 8px;
+    width: 16px;
+    position: absolute;
+    top: -8px;
+    left: 106px;
 }
 input.di-picker__value
 {
@@ -59,7 +85,7 @@ input.di-picker__value
 .di-dash
 {
     display: inline-block;
-    line-height: 30px;
+    line-height: 29px;
     width: 10px;
     text-align: center;
 }
@@ -98,6 +124,22 @@ input.di-picker__value
     display: inline-block;
     padding-top: 1px;
 }
+.diP-header__text
+{
+    font-size: 16px;
+    height: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+.diP-header__text:not(.-allow)
+{
+    opacity: 0.5;
+}
+.diP-header__text.-allow:hover
+{
+    cursor: pointer;
+    color: #00a2ff;
+}
 .diP-header__name.-previousMonth
 {
     padding-right: 39px;
@@ -113,7 +155,7 @@ input.di-picker__value
     display: inline-block;
     font-size: 25px;
     text-align: right;
-    padding-right: 4px;
+    padding-right: 10px;
 }
 .diP-header__next
 {
@@ -122,13 +164,38 @@ input.di-picker__value
     display: inline-block;
     font-size: 25px;
     text-align: left;
-    padding-left: 4px;
+    padding-left: 10px;
 
 }
 .diP-header__prev:hover,
 .diP-header__next:hover
 {
     cursor: pointer;
+}
+.diP-header__text
+{
+    font-size: 16px;
+    height: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+.diP-header__text:not(.-allow)
+{
+    opacity: 0.5;
+}
+.diP-header__text.-allow:hover
+{
+    cursor: pointer;
+    color: #00a2ff;
+}
+
+.di-panel__separator
+{
+    width: 1px;
+    height: 135px;
+    background-color: #f5f5f5;
+    float: left;
+    margin-top: 6px;
 }
 .di-panel__data
 {
@@ -153,6 +220,9 @@ input.di-picker__value
 .di-picker__week div.di-picker__day_name:nth-child(6),
 .di-picker__week div.di-picker__day_name:nth-child(7){
     color: #ff0000;
+}
+.di-picker__week.-notallow .di-picker__day_name {
+    opacity: 0.5;
 }
 .di-picker__day,
 .di-picker__day_name

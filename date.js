@@ -138,6 +138,28 @@ var dateAssitant = (function()
         var lastday = new Date(curr.setDate(last));
         return {first:firstday, last: lastday};
     };
+
+    dateAss.getMonthDays = function(year, month)
+    {
+        var today = new Date();
+        if (today.getMonth() == month && year == today.getFullYear())
+        {
+            return dateAss.getCurrentMonthDays();
+        }
+        var firstDay = new Date(year, month, 1);
+        if (month == 11)
+        {
+            month = 0;
+            year = year + 1;
+        }
+        else
+        {
+            month ++;
+        }
+        var lastDay = new Date(year, month, 0);
+        return {first:firstDay, last: lastDay};
+
+    };
     dateAss.getYesterdayDays = function()
     {
         var date = new Date();
