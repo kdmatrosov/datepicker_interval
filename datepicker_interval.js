@@ -50,7 +50,7 @@ window.onload = function () {
                 })
                 .on('click', function (e) {
                     d_panel.removeClass('dspl-none');
-                    di_icon.addClass('-active');
+                    di_icon__dp.addClass('-active');
                     d_input_start.currentElement.index = 0;
                     showMonth();
                 });
@@ -64,7 +64,7 @@ window.onload = function () {
                 })
                 .on('click', function (e) {
                     d_panel.removeClass('dspl-none');
-                    di_icon.addClass('-active');
+                    di_icon__dp.addClass('-active');
                     d_input_start.currentElement.index = 1;
                     showMonth();
                 });
@@ -91,7 +91,7 @@ window.onload = function () {
                 setDateForInput(d_input_start, month__days.first);
                 setDateForInput(d_input_end, month__days.last);
                 d_panel.addClass('dspl-none');
-                di_icon.removeClass('-active');
+                di_icon__dp.removeClass('-active');
             }
             var p_functions__previous_month = initElem(p_functions, 'div', 'Прошлый месяц').addClass('diP-functions__action').on('click', function()
             {
