@@ -27,16 +27,16 @@ window.onload = function () {
                 .on('mouseleave', function (e) {
                     d_input_start.on('blur', function () {
                         d_panel.addClass('dspl-none');
-                        di_icon.removeClass('-active');
+                        di_icon__dp.removeClass('-active');
                     });
                     d_input_end.on('blur', function () {
                         d_panel.addClass('dspl-none');
-                        di_icon.removeClass('-active');
+                        di_icon__dp.removeClass('-active');
                     });
                 });
 
-            var di_icon = initElem(new_datepicker, 'div').addClass('di-icon');
-            initElem(di_icon, 'div').addClass('di-icon__datepicker').on('click', function()
+            var di_icon = initElem(new_datepicker, 'div').addClass('dic-icon');
+            var di_icon__dp = initElem(di_icon, 'div').addClass('dic-icon__datepicker').on('click', function()
             {
                 d_panel.currentElement.classList.toggle('dspl-none');
                 this.classList.toggle('-active');
