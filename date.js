@@ -130,12 +130,14 @@ var dateAssitant = (function()
     };
     dateAss.getCurrentWeekDays = function()
     {
-        var curr = new Date;
+        var curr = new Date();
+        var y = curr.getFullYear();
+        var m = curr.getMonth();
         var first = curr.getDate() - curr.getDay() + 1;
         var last = first + curr.getDay() - 1;
 
-        var firstday = new Date(curr.setDate(first));
-        var lastday = new Date(curr.setDate(last));
+        var firstday = new Date(y, m, first);
+        var lastday = new Date(y, m, last);
         return {first:firstday, last: lastday};
     };
 
