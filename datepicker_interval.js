@@ -195,6 +195,8 @@ window.onload = function () {
                             p_header__name[input_i].racfn(); // clear filed for header
                             var curr_day = (inputs[input_i].y == ty && inputs[input_i].m == tm) ? td : 0;
                             var selected = getSelectedDates(inputs[input_i]);
+                            console.log(inputs[input_i].date);
+                            console.log(inputs[input_i].m);
                             var month = dateAssitant.getMonth(inputs[input_i].y, inputs[input_i].m);
                             var ph__name = initElem(p_header__name[input_i], 'span', dateAssitant.getMonthName(inputs[input_i].m) + ' ' + inputs[input_i].y).addClass('diP-header__text');
                             var week = initElem(p_data[input_i], 'div').addClass('di-picker__week');
@@ -235,6 +237,7 @@ window.onload = function () {
                                 var day = initElem(week, 'div', i).addClass('di-picker__day').on('click', function () { // init day
 
                                     if (this.classList.contains('-future')) return false;
+                                    if (this.classList.contains('-block')) return false;
                                     var input = inputs[input__index]; // current input to get value
 
                                     input.d = this.innerText || this.innerHTML; // cross  brower
@@ -244,20 +247,15 @@ window.onload = function () {
                                         m: inputs[input_i].m,
                                         d: +input.d
                                     };
-                                    input__index = (input__index + 1) % 2;
-                                    if (inputs[input__index].value == '') { // if second input is empty
+                                    if (input__index == 0 || inputs[input__index].value == '') { // if second input is empty
                                         inputs[input__index].value = input.value;
                                         inputs[input__index].date = input.date;
                                     }
+                                    input__index = (input__index + 1) % 2;
                                     if (inputs[1].value != '' && inputs[0].value != '') {
                                         if (dateAssitant.compareDates(inputs[1].date, inputs[0].date)) { // if second input is less than first
-                                            var temp = inputs[1].value;
                                             inputs[1].value = inputs[0].value;
-                                            inputs[0].value = temp;
-                                            temp = inputs[1].date;
                                             inputs[1].date = inputs[0].date;
-                                            inputs[0].date = temp;
-                                            input__index = 0;
                                         }
                                     }
                                     di_start.index = input__index; // remember the next input to change value
@@ -265,6 +263,19 @@ window.onload = function () {
                                 });
                                 if (curr_day == i) {
                                     day.addClass('-today');
+                                }
+                                if (input__index == 1)
+                                {
+                                    var t_date ={
+                                        d: i,
+                                        m: inputs[input_i].m,
+                                        y: inputs[input_i].y
+                                    };
+
+
+                                    if (dateAssitant.compareDates(t_date, inputs[0].date)) {
+                                        day.addClass('-block');
+                                    }
                                 }
                                 if (~selected.indexOf(i)) {
                                     day.addClass('-selected');

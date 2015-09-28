@@ -241,13 +241,14 @@ input.di-picker__value
     line-height: 27px;
     text-align: center;    float: left;
 }
-.di-picker__day:not(.-empty):not(.-future):hover
+.di-picker__day:not(.-empty):not(.-future):not(.-block):hover
 {
-    line-height: 25px;
+    line-height: 23px;
     border: 1px dotted #d1d1d1;
     cursor: pointer;
 }
-.di-picker__day.-future
+.di-picker__day.-future,
+.di-picker__day.-block
 {
     opacity: 0.5;
 }
