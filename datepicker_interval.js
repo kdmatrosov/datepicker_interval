@@ -195,8 +195,6 @@ window.onload = function () {
                             p_header__name[input_i].racfn(); // clear filed for header
                             var curr_day = (inputs[input_i].y == ty && inputs[input_i].m == tm) ? td : 0;
                             var selected = getSelectedDates(inputs[input_i]);
-                            console.log(inputs[input_i].date);
-                            console.log(inputs[input_i].m);
                             var month = dateAssitant.getMonth(inputs[input_i].y, inputs[input_i].m);
                             var ph__name = initElem(p_header__name[input_i], 'span', dateAssitant.getMonthName(inputs[input_i].m) + ' ' + inputs[input_i].y).addClass('diP-header__text');
                             var week = initElem(p_data[input_i], 'div').addClass('di-picker__week');
